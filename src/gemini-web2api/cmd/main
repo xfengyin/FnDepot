@@ -1,0 +1,27 @@
+#!/bin/bash
+# gemini-web2api 启停脚本
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+# shellcheck source=common
+source "${SCRIPT_DIR}/common"
+
+case "$1" in
+    start)
+        start_app
+        exit $?
+        ;;
+    stop)
+        stop_app
+        exit $?
+        ;;
+    status)
+        if status_app; then
+            exit 0
+        fi
+        exit 3
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|status}" >&2
+        exit 1
+        ;;
+esac

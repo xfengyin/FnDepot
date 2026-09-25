@@ -1,0 +1,7 @@
+{
+  "defaults": {
+    "run-as": "package"
+  },
+  "username": "gemini-web2api",
+  "groupname": "gemini-web2api"
+}

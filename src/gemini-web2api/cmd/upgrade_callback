@@ -1,0 +1,11 @@
+#!/bin/bash
+# 升级后补齐配置并交还目录权限
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+# shellcheck source=common
+source "${SCRIPT_DIR}/common"
+
+seed_config || exit 1
+fix_permissions
+
+exit 0

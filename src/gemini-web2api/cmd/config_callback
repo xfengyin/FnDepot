@@ -1,0 +1,11 @@
+#!/bin/bash
+# 配置变更后重启服务，使新配置生效
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+# shellcheck source=common
+source "${SCRIPT_DIR}/common"
+
+stop_app
+start_app
+
+exit $?

@@ -1,0 +1,64 @@
+{
+  "schema_version": "2",
+  "source_info": {
+    "name": "xfengyin 应用源",
+    "author": "xfengyin",
+    "homepage": "https://github.com/xfengyin/FnDepot",
+    "description": "由 xfengyin 维护的 FnDepot 外部应用源。",
+    "i18n": {
+      "en-US": {
+        "name": "xfengyin App Source",
+        "description": "FnDepot third-party app source maintained by xfengyin."
+      }
+    }
+  },
+  "apps": {
+    "gemini-web2api": {
+      "display_name": "Gemini Web2API",
+      "desc": "把 Google Gemini 网页端转换成 OpenAI 兼容 API 服务：无需 API Key、无需登录即可运行，支持 /v1/chat/completions、/v1/models、/v1/responses（Codex CLI）与 /v1beta/models（Gemini CLI），支持流式输出、函数调用、多模型与 @think=N 思考深度。安装后通过 http://<NAS 地址>:8081/v1 调用。",
+      "i18n": {
+        "en-US": {
+          "display_name": "Gemini Web2API",
+          "desc": "Turns the Google Gemini web app into an OpenAI-compatible API service. Runs without an API key or login and supports /v1/chat/completions, /v1/models, /v1/responses (Codex CLI) and /v1beta/models (Gemini CLI), with streaming, function calling, multiple models and @think=N thinking depth. Call it at http://<NAS-IP>:8081/v1 after installation."
+        }
+      },
+      "platform": [
+        "all"
+      ],
+      "categories": [
+        "AI赋能",
+        "编程开发"
+      ],
+      "icon_url": "./assets/gemini-web2api-icon.png",
+      "readme_url": "./docs/gemini-web2api.md",
+      "bug_report_url": "https://github.com/Sophomoresty/gemini-web2api/issues",
+      "maintainer": "Sophomoresty",
+      "maintainer_url": "https://github.com/Sophomoresty/gemini-web2api",
+      "distributor": "xfengyin",
+      "distributor_url": "https://github.com/xfengyin",
+      "run_as": "package",
+      "install_type": "",
+      "is_docker": false,
+      "service_port": "8081",
+      "releases": {
+        "1.1.0": {
+          "changelog": "首次发布：把 Sophomoresty/gemini-web2api 1.1.0 打包为飞牛 fnOS 原生应用，内置 httpx，安装即用，默认监听 8081 端口。",
+          "i18n": {
+            "en-US": {
+              "changelog": "First release: packages Sophomoresty/gemini-web2api 1.1.0 as a native fnOS app with bundled httpx, listening on port 8081."
+            }
+          },
+          "updated_at": "2026-09-25T18:30:00+08:00",
+          "os_min_version": "1.2.0",
+          "packages": {
+            "all": {
+              "download_url": "./packages/gemini-web2api_1.1.0_all.fpk",
+              "sha256": "b10cb799b5b17e07137224d76c8760f58d001d4ac285ea6a0ee04b67922f2d61",
+              "size": 578080
+            }
+          }
+        }
+      }
+    }
+  }
+}

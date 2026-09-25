@@ -1,0 +1,11 @@
+#!/bin/bash
+# 卸载后清理运行时残留；配置写在 TRIM_PKGVAR，重新安装时会自动生成
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+# shellcheck source=common
+source "${SCRIPT_DIR}/common"
+
+rm -f "${PID_FILE}"
+rm -f "${TRIM_PKGVAR}/app.log"
+
+exit 0

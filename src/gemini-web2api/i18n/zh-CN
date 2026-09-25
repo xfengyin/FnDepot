@@ -1,0 +1,8 @@
+[common]
+display_name="Gemini Web2API"
+desc="把 Google Gemini 网页端转换成 OpenAI 兼容 API 服务。零成本、免登录即可运行，支持 /v1/chat/completions、流式输出、函数调用与多模型切换。"
+changelog="1.1.0：首次发布。打包 Sophomoresty/gemini-web2api，改编为飞牛 fnOS 原生应用，可直接在应用中心安装、启停，并通过 FnDepot 应用源分发。"
+
+[entry]
+title="打开 Gemini Web2API 状态页。"
+desc="把 Google Gemini 网页端转换成 OpenAI 兼容 API 服务。零成本、免登录即可运行，支持 /v1/chat/completions、流式输出、函数调用与多模型切换。"

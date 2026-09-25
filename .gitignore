@@ -1,0 +1,7 @@
+.build/
+src/gemini-web2api/app/server/
+src/gemini-web2api/app/vendor/
+src/gemini-web2api/app/config.example.json
+src/gemini-web2api/app/ui/images/
+src/gemini-web2api/ICON.PNG
+src/gemini-web2api/ICON_256.PNG

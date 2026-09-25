@@ -1,0 +1,8 @@
+[common]
+display_name="Gemini Web2API"
+desc="Google Gemini の Web 版を OpenAI 互換 API サービスに変換します。ゼロコスト・ログイン不要で動作し、/v1/chat/completions、ストリーミング、関数呼び出し、複数モデルに対応します。"
+changelog="1.1.0：初回リリース。Sophomoresty/gemini-web2api を fnOS ネイティブアプリとしてパッケージ化し、アプリセンターからインストール・起動停止でき、FnDepot のアプリソースから配布できます。"
+
+[entry]
+title="Gemini Web2API のステータスページを開きます。"
+desc="Google Gemini の Web 版を OpenAI 互換 API サービスに変換します。ゼロコスト・ログイン不要で動作し、/v1/chat/completions、ストリーミング、関数呼び出し、複数モデルに対応します。"

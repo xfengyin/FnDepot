@@ -1,0 +1,20 @@
+{
+  ".url": {
+    "gemini-web2api.Application": {
+      "title": "${entry.title}",
+      "desc": "${entry.desc}",
+      "icon": "images/icon_{0}.png",
+      "type": "url",
+      "protocol": "http",
+      "port": "8081",
+      "url": "/",
+      "allUsers": false,
+      "control": {
+        "accessPerm": "readonly",
+        "fullUrlPerm": "readonly",
+        "portPerm": "readonly",
+        "pathPerm": "readonly"
+      }
+    }
+  }
+}
