@@ -6,6 +6,10 @@
     "homepage": "https://github.com/xfengyin/FnDepot",
     "description": "由 xfengyin 维护的 FnDepot 外部应用源。",
     "i18n": {
+      "zh-CN": {
+        "name": "xfengyin 应用源",
+        "description": "由 xfengyin 维护的 FnDepot 外部应用源。"
+      },
       "en-US": {
         "name": "xfengyin App Source",
         "description": "FnDepot third-party app source maintained by xfengyin."
@@ -17,6 +21,14 @@
       "display_name": "Gemini Web2API",
       "desc": "把 Google Gemini 网页端转换成 OpenAI 兼容 API 服务：无需 API Key、无需登录即可运行，支持 /v1/chat/completions、/v1/models、/v1/responses（Codex CLI）与 /v1beta/models（Gemini CLI），支持流式输出、函数调用、多模型与 @think=N 思考深度。安装后通过 http://<NAS 地址>:8081/v1 调用。",
       "i18n": {
+        "zh-CN": {
+          "display_name": "Gemini Web2API",
+          "desc": "把 Google Gemini 网页端转换成 OpenAI 兼容 API 服务：无需 API Key、无需登录即可运行，支持 /v1/chat/completions、/v1/models、/v1/responses（Codex CLI）与 /v1beta/models（Gemini CLI），支持流式输出、函数调用、多模型与 @think=N 思考深度。安装后通过 http://<NAS 地址>:8081/v1 调用。"
+        },
+        "zh-TW": {
+          "display_name": "Gemini Web2API",
+          "desc": "把 Google Gemini 網頁端轉換成 OpenAI 相容 API 服務：不需 API Key、不需登入即可執行，支援 /v1/chat/completions、/v1/models、/v1/responses（Codex CLI）與 /v1beta/models（Gemini CLI），支援串流輸出、函式呼叫、多模型與 @think=N 思考深度。安裝後透過 http://<NAS 位址>:8081/v1 呼叫。"
+        },
         "en-US": {
           "display_name": "Gemini Web2API",
           "desc": "Turns the Google Gemini web app into an OpenAI-compatible API service. Runs without an API key or login and supports /v1/chat/completions, /v1/models, /v1/responses (Codex CLI) and /v1beta/models (Gemini CLI), with streaming, function calling, multiple models and @think=N thinking depth. Call it at http://<NAS-IP>:8081/v1 after installation."
@@ -44,6 +56,12 @@
         "1.1.0": {
           "changelog": "首次发布：把 Sophomoresty/gemini-web2api 1.1.0 打包为飞牛 fnOS 原生应用，内置 httpx，安装即用，默认监听 8081 端口。",
           "i18n": {
+            "zh-CN": {
+              "changelog": "首次发布：把 Sophomoresty/gemini-web2api 1.1.0 打包为飞牛 fnOS 原生应用，内置 httpx，安装即用，默认监听 8081 端口。"
+            },
+            "zh-TW": {
+              "changelog": "首次發佈：把 Sophomoresty/gemini-web2api 1.1.0 打包為飛牛 fnOS 原生應用，內建 httpx，安裝即用，預設監聽 8081 連接埠。"
+            },
             "en-US": {
               "changelog": "First release: packages Sophomoresty/gemini-web2api 1.1.0 as a native fnOS app with bundled httpx, listening on port 8081."
             }
