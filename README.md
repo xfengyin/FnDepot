@@ -85,14 +85,14 @@ curl -x http://<代理>:<端口> -o /dev/null -w "%{http_code}\n" -m 90 https://
 
 **机房 IP（VPS / 云主机）做出口时，Google 会对匿名请求返回 `BardErrorInfo [1060]`**，大约六成的请求会被打回，跟模型、参数都无关。
 
-- **1.1.1 起**：应用能正确识别这个错误并自动重试（默认 `retry_attempts=5`），实测成功率从 ~40% 提升到 6/6。
+- **1.1.1 起**：应用能正确识别这个错误并自动重试（默认 `retry_attempts=8`、`retry_delay_sec=1`），实测成功率从 ~40% 提升到 10/10。
 - **想彻底稳定**：配置 Gemini 账号 Cookie（`cookie_file`），带登录态就不再吃这个限流。Cookie 获取方式见上游 [README_CN](https://github.com/Sophomoresty/gemini-web2api/blob/main/README_CN.md)。
 
 ### 接口返回 200 但 content 是 null？
 
 这就是上面说的 1060 被静默吞掉的现象。1.1.1 之前上游的正则只认 `BardErrorInfo [1060]`（带空格），而 Google 实际返回的是 `"BardErrorInfo",[1060]`，匹配不上 → 不抛错 → 不重试 → 返回空内容。
 
-1.1.1 的打包脚本里已经修掉了这个正则（`build.sh` 中「打补丁」那一步），同时把默认 `retry_attempts` 从 3 提到 5。
+1.1.1 的打包脚本里已经修掉了这个正则（`build.sh` 中「打补丁」那一步），同时把默认 `retry_attempts` 从 3 提到 8，重试间隔从 2s 降到 1s。
 
 ## 构建
 

@@ -80,11 +80,12 @@ import json, sys
 
 path = sys.argv[1]
 cfg = json.load(open(path, encoding="utf-8"))
-cfg["retry_attempts"] = 5
+cfg["retry_attempts"] = 8
+cfg["retry_delay_sec"] = 1
 with open(path, "w", encoding="utf-8") as fh:
     json.dump(cfg, fh, ensure_ascii=False, indent=2)
     fh.write("\n")
-print("  config.example.json: retry_attempts=5")
+print("  config.example.json: retry_attempts=8, retry_delay_sec=1")
 PY
 
 log "安装 httpx 到 app/vendor（开箱即有真正的流式输出）"

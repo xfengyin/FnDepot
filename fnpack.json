@@ -98,6 +98,26 @@
               "size": 578003
             }
           }
+        },
+        "1.1.2": {
+          "changelog": "提高匿名访问的成功率：默认重试次数 5 -> 8、重试间隔 2s -> 1s。实测同一代理下从 5/6 提升到 10/10。已装 1.1.1 也可以只在 config.json 里把 retry_attempts 改成 8、retry_delay_sec 改成 1，效果相同。",
+          "i18n": {
+            "zh-CN": {
+              "changelog": "提高匿名访问的成功率：默认重试次数 5 -> 8、重试间隔 2s -> 1s。实测同一代理下从 5/6 提升到 10/10。已装 1.1.1 也可以只在 config.json 里把 retry_attempts 改成 8、retry_delay_sec 改成 1，效果相同。"
+            },
+            "en-US": {
+              "changelog": "Improves the success rate for anonymous access: default retries 5 -> 8 and retry delay 2s -> 1s. Measured 5/6 -> 10/10 through the same proxy. On 1.1.1 you can get the same result by setting retry_attempts=8 and retry_delay_sec=1 in config.json."
+            }
+          },
+          "updated_at": "2026-09-25T20:30:00+08:00",
+          "os_min_version": "1.2.0",
+          "packages": {
+            "all": {
+              "download_url": "./packages/gemini-web2api_1.1.2_all.fpk",
+              "sha256": "3a4d310850c14871eebec2405a93ff3b5c50f2d98e0673fe6bec909b8e0d8a66",
+              "size": 578039
+            }
+          }
         }
       }
     }
