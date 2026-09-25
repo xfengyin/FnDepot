@@ -60,6 +60,40 @@ appcenter-cli install-fpk ./packages/gemini-web2api_1.1.0_all.fpk
 
 > 内置了 `httpx`，所以开箱就是真正的流式输出（SSE），无需另外 `pip install`。
 
+## 跑不通先看这里
+
+这个应用只是把 Gemini 网页端包成 OpenAI 接口，**它自己不产生任何 AI 能力**，所以必须满足两件事：
+
+### 1. 这台 NAS 要能访问 Google
+
+大陆网络直连 `gemini.google.com` 是不通的（DNS 被污染 + TCP 超时）。在配置文件里加代理：
+
+```json
+"proxy": "http://192.168.31.244:7890"
+```
+
+怎么确认代理到底通不通：
+
+```bash
+# 期望 204
+curl -x http://<代理>:<端口> -o /dev/null -w "%{http_code}\n" https://www.google.com/generate_204
+# 期望 200，可能需要 1 分钟以上
+curl -x http://<代理>:<端口> -o /dev/null -w "%{http_code}\n" -m 90 https://gemini.google.com/app
+```
+
+### 2. Google 要愿意接受这次请求
+
+**机房 IP（VPS / 云主机）做出口时，Google 会对匿名请求返回 `BardErrorInfo [1060]`**，大约六成的请求会被打回，跟模型、参数都无关。
+
+- **1.1.1 起**：应用能正确识别这个错误并自动重试（默认 `retry_attempts=5`），实测成功率从 ~40% 提升到 6/6。
+- **想彻底稳定**：配置 Gemini 账号 Cookie（`cookie_file`），带登录态就不再吃这个限流。Cookie 获取方式见上游 [README_CN](https://github.com/Sophomoresty/gemini-web2api/blob/main/README_CN.md)。
+
+### 接口返回 200 但 content 是 null？
+
+这就是上面说的 1060 被静默吞掉的现象。1.1.1 之前上游的正则只认 `BardErrorInfo [1060]`（带空格），而 Google 实际返回的是 `"BardErrorInfo",[1060]`，匹配不上 → 不抛错 → 不重试 → 返回空内容。
+
+1.1.1 的打包脚本里已经修掉了这个正则（`build.sh` 中「打补丁」那一步），同时把默认 `retry_attempts` 从 3 提到 5。
+
 ## 构建
 
 需要 `git`、`python3`（含 pip）、ImageMagick（`convert`）和飞牛官方的 `fnpack`。

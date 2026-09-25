@@ -75,6 +75,29 @@
               "size": 578080
             }
           }
+        },
+        "1.1.1": {
+          "changelog": "修复 Google 返回 BardErrorInfo 时被静默吞掉的问题：此前接口会返回 HTTP 200 但 content 为 null，客户端看起来像“没有反应”。现在会正确识别错误并自动重试，默认重试次数从 3 提到 5。如果你在国内且用机房 IP 的代理访问 Google，这一版能大幅改善成功率。",
+          "i18n": {
+            "zh-CN": {
+              "changelog": "修复 Google 返回 BardErrorInfo 时被静默吞掉的问题：此前接口会返回 HTTP 200 但 content 为 null，客户端看起来像“没有反应”。现在会正确识别错误并自动重试，默认重试次数从 3 提到 5。如果你在国内且用机房 IP 的代理访问 Google，这一版能大幅改善成功率。"
+            },
+            "zh-TW": {
+              "changelog": "修復 Google 回傳 BardErrorInfo 時被靜默吞掉的問題：先前介面會回傳 HTTP 200 但 content 為 null，客戶端看起來像「沒有反應」。現在會正確識別錯誤並自動重試，預設重試次數從 3 提高到 5。"
+            },
+            "en-US": {
+              "changelog": "Fixes BardErrorInfo responses from Google being silently swallowed: the API used to return HTTP 200 with a null content, which looked like no response in clients. Errors are now detected and retried automatically, and the default retry count was raised from 3 to 5. This greatly improves the success rate when reaching Google through a datacenter-IP proxy."
+            }
+          },
+          "updated_at": "2026-09-25T19:40:00+08:00",
+          "os_min_version": "1.2.0",
+          "packages": {
+            "all": {
+              "download_url": "./packages/gemini-web2api_1.1.1_all.fpk",
+              "sha256": "5a1c34d1b5acce0f363310391b28a027d35895caa15608400017319705959084",
+              "size": 578003
+            }
+          }
         }
       }
     }

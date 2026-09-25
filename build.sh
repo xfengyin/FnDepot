@@ -60,6 +60,33 @@ cp -R "${SRC_DIR}/gemini_web2api" "${PKG_DIR}/server/"
 cp "${SRC_DIR}/LICENSE" "${PKG_DIR}/server/LICENSE"
 cp "${SRC_DIR}/config.example.json" "${PKG_DIR}/config.example.json"
 
+log "打补丁：让 BardErrorInfo 被正确识别（否则 Google 返回 1060 时会静默回空内容且不重试）"
+python3 - "${PKG_DIR}/server/gemini_web2api/gemini.py" <<'PY'
+import pathlib, sys
+
+path = pathlib.Path(sys.argv[1])
+src = path.read_text(encoding="utf-8")
+old = r"BardErrorInfo\s*\[(\d+)\]"
+new = r'BardErrorInfo"?\s*,?\s*\[(\d+)\]'
+count = src.count(old)
+if count:
+    path.write_text(src.replace(old, new), encoding="utf-8")
+print(f"  BardErrorInfo 正则已修正 {count} 处")
+PY
+
+log "调整默认配置（匿名访问更需要重试）"
+python3 - "${PKG_DIR}/config.example.json" <<'PY'
+import json, sys
+
+path = sys.argv[1]
+cfg = json.load(open(path, encoding="utf-8"))
+cfg["retry_attempts"] = 5
+with open(path, "w", encoding="utf-8") as fh:
+    json.dump(cfg, fh, ensure_ascii=False, indent=2)
+    fh.write("\n")
+print("  config.example.json: retry_attempts=5")
+PY
+
 log "安装 httpx 到 app/vendor（开箱即有真正的流式输出）"
 rm -rf "${PKG_DIR}/vendor"
 python3 -m pip install --quiet --no-cache-dir --no-compile --target "${PKG_DIR}/vendor" "httpx>=0.28,<0.29"
@@ -82,14 +109,25 @@ mv "${ROOT}/${APP_NAME}.fpk" "${ROOT}/packages/${FPK_NAME}"
 
 log "刷新 fnpack.json 中的 download_url / size / sha256"
 python3 - "${ROOT}" "${APP_NAME}" "${APP_VER}" "${FPK_NAME}" <<'PY'
-import hashlib, json, os, sys
+import datetime, hashlib, json, os, sys
 
 root, app, ver, fpk = sys.argv[1:5]
 blob = open(os.path.join(root, "packages", fpk), "rb").read()
 index_path = os.path.join(root, "fnpack.json")
 with open(index_path, encoding="utf-8") as fh:
     index = json.load(fh)
-pkg = index["apps"][app]["releases"][ver]["packages"]["all"]
+
+releases = index["apps"][app].setdefault("releases", {})
+if ver not in releases:
+    releases[ver] = {
+        "changelog": f"更新到 gemini-web2api {ver}。",
+        "updated_at": datetime.datetime.now().astimezone().replace(microsecond=0).isoformat(),
+        "os_min_version": "1.2.0",
+        "packages": {},
+    }
+    print(f"  已新建 releases[{ver}]，记得补写 changelog")
+
+pkg = releases[ver].setdefault("packages", {}).setdefault("all", {})
 pkg.update({
     "download_url": f"./packages/{fpk}",
     "sha256": hashlib.sha256(blob).hexdigest(),

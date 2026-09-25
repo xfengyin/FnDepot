@@ -49,6 +49,20 @@
 
 修改后重启应用生效。
 
+## 常见问题
+
+**调用时返回 200 但 content 是 null / 客户端显示「没有回复」**
+
+说明这台机器到 Google 的链路被 Google 拒绝了，最常见的是 `BardErrorInfo [1060]`：
+
+- 先确认能访问 Google：`curl -x <代理> -o /dev/null -w "%{http_code}" https://gemini.google.com/app` 应该是 200。
+- 直连大陆网络一定失败，必须在 `config.json` 里填 `proxy`。
+- 用 VPS / 云主机这类机房 IP 做出口时，Google 会随机对匿名请求返回 1060（约六成）。**1.1.1 起会自动重试**，基本能压下去；想要完全稳定就配 `cookie_file` 用 Gemini 账号 Cookie。
+
+**Pro 模型实际返回 Flash 的内容**
+
+`gemini-3.1-pro` 在无 Cookie 时会路由到 Flash，属于上游行为，需要 Gemini Advanced 账号的 Cookie 才会真正走 Pro。
+
 ## 应用信息
 
 | 项目 | 值 |
