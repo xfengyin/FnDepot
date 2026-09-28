@@ -18,20 +18,20 @@
   },
   "apps": {
     "gemini-web2api": {
-      "display_name": "Gemini Web2API",
-      "desc": "把 Google Gemini 网页端转换成 OpenAI 兼容 API 服务：无需 API Key、无需登录即可运行，支持 /v1/chat/completions、/v1/models、/v1/responses（Codex CLI）与 /v1beta/models（Gemini CLI），支持流式输出、函数调用、多模型与 @think=N 思考深度。安装后通过 http://<NAS 地址>:8081/v1 调用。",
+      "display_name": "gemini-web2api",
+      "desc": "把 Google Gemini 网页端转换成 OpenAI 兼容 API 服务，内置 Web 控制台：凭证管理、模型探测、用量统计、配置编辑与运行日志。支持 /v1/chat/completions、流式输出、函数调用与多模型切换；安装后通过 http://<NAS 地址>:8081/v1 调用，面板位于 /panel。",
       "i18n": {
         "zh-CN": {
-          "display_name": "Gemini Web2API",
-          "desc": "把 Google Gemini 网页端转换成 OpenAI 兼容 API 服务：无需 API Key、无需登录即可运行，支持 /v1/chat/completions、/v1/models、/v1/responses（Codex CLI）与 /v1beta/models（Gemini CLI），支持流式输出、函数调用、多模型与 @think=N 思考深度。安装后通过 http://<NAS 地址>:8081/v1 调用。"
+          "display_name": "gemini-web2api",
+          "desc": "把 Google Gemini 网页端转换成 OpenAI 兼容 API 服务，内置 Web 控制台：凭证管理、模型探测、用量统计、配置编辑与运行日志。支持 /v1/chat/completions、流式输出、函数调用与多模型切换；安装后通过 http://<NAS 地址>:8081/v1 调用，面板位于 /panel。"
         },
         "zh-TW": {
-          "display_name": "Gemini Web2API",
-          "desc": "把 Google Gemini 網頁端轉換成 OpenAI 相容 API 服務：不需 API Key、不需登入即可執行，支援 /v1/chat/completions、/v1/models、/v1/responses（Codex CLI）與 /v1beta/models（Gemini CLI），支援串流輸出、函式呼叫、多模型與 @think=N 思考深度。安裝後透過 http://<NAS 位址>:8081/v1 呼叫。"
+          "display_name": "gemini-web2api",
+          "desc": "把 Google Gemini 網頁端轉換成 OpenAI 相容 API 服務，內建 Web 控制台：憑證管理、模型探測、用量統計、設定編輯與執行日誌。支援 /v1/chat/completions、串流輸出、函式呼叫與多模型切換；安裝後透過 http://<NAS 位址>:8081/v1 呼叫，面板位於 /panel。"
         },
         "en-US": {
-          "display_name": "Gemini Web2API",
-          "desc": "Turns the Google Gemini web app into an OpenAI-compatible API service. Runs without an API key or login and supports /v1/chat/completions, /v1/models, /v1/responses (Codex CLI) and /v1beta/models (Gemini CLI), with streaming, function calling, multiple models and @think=N thinking depth. Call it at http://<NAS-IP>:8081/v1 after installation."
+          "display_name": "gemini-web2api",
+          "desc": "Turns the Google Gemini web app into an OpenAI-compatible API service with a built-in web console: credential management, model probes, usage stats, config editor and live logs. Supports /v1/chat/completions, streaming, function calling and multiple models. Call the API at http://<NAS-IP>:8081/v1; the console lives at /panel."
         }
       },
       "platform": [
@@ -116,6 +116,29 @@
               "download_url": "./packages/gemini-web2api_1.1.2_all.fpk",
               "sha256": "3a4d310850c14871eebec2405a93ff3b5c50f2d98e0673fe6bec909b8e0d8a66",
               "size": 578039
+            }
+          }
+        },
+        "1.2.1": {
+          "changelog": "1.2.1：新增 Web 控制台（/panel）：凭证管理、模型探测、用量统计、配置编辑、运行日志；支持深浅色主题；应用显示名称统一为 gemini-web2api；保持 API 与配置向后兼容。",
+          "i18n": {
+            "zh-CN": {
+              "changelog": "1.2.1：新增 Web 控制台（/panel）：凭证管理、模型探测、用量统计、配置编辑、运行日志；支持深浅色主题；应用显示名称统一为 gemini-web2api；保持 API 与配置向后兼容。"
+            },
+            "zh-TW": {
+              "changelog": "1.2.1：新增 Web 控制台（/panel）：憑證管理、模型探測、用量統計、設定編輯、執行日誌；支援深淺色主題；應用顯示名稱統一為 gemini-web2api；維持 API 與設定向後相容。"
+            },
+            "en-US": {
+              "changelog": "1.2.1: adds the built-in web console (/panel) with credential management, model probes, usage statistics, config editor and live logs; light/dark themes; app display name unified as gemini-web2api; API and config remain backward compatible."
+            }
+          },
+          "updated_at": "2026-09-28T11:55:50+08:00",
+          "os_min_version": "1.2.0",
+          "packages": {
+            "all": {
+              "download_url": "./packages/gemini-web2api_1.2.1_all.fpk",
+              "sha256": "6a87d4a3631b9a599e3210ce9c670e4f1bb92e113de7199b66fd2538b8e66f49",
+              "size": 605636
             }
           }
         }
