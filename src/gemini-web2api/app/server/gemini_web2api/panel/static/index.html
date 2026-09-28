@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>gemini-web2api · 控制台</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1.5 14 5v6l-6 3.5L2 11V5z' fill='none' stroke='%235b7cfa' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="shell">
+  <nav class="nav">
+    <div class="brand">
+      <div class="name">gemini-web2api</div>
+      <div class="sub" id="navSub">控制台</div>
+    </div>
+    <ul>
+      <li><a href="#dashboard" data-view="dashboard" class="on">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="2" width="5.2" height="5.2" rx="1"/><rect x="8.8" y="2" width="5.2" height="5.2" rx="1"/><rect x="2" y="8.8" width="5.2" height="5.2" rx="1"/><rect x="8.8" y="8.8" width="5.2" height="5.2" rx="1"/></svg>
+        概览</a></li>
+      <li><a href="#credentials" data-view="credentials">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="5.8" r="2.6"/><path d="M2.8 13.5c.6-2.6 2.7-4 5.2-4s4.6 1.4 5.2 4"/></svg>
+        凭证</a></li>
+      <li><a href="#models" data-view="models">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 1.8 14 5v6L8 14.2 2 11V5z"/><path d="M2 5l6 3.2L14 5M8 8.2v6"/></svg>
+        模型与探测</a></li>
+      <li><a href="#usage" data-view="usage">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 13.5h12"/><path d="M4.5 13.5V8.2M8 13.5V3.5M11.5 13.5v-3"/></svg>
+        用量</a></li>
+      <li><a href="#config" data-view="config">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="2.2"/><path d="M8 1.6v1.9M8 12.5v1.9M1.6 8h1.9M12.5 8h1.9M3.5 3.5l1.3 1.3M11.2 11.2l1.3 1.3M12.5 3.5l-1.3 1.3M4.8 11.2l-1.3 1.3"/></svg>
+        配置</a></li>
+      <li><a href="#logs" data-view="logs">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2.5 3.5h11M2.5 8h11M2.5 12.5h7"/></svg>
+        运行日志</a></li>
+    </ul>
+    <div class="sig">
+      <div class="row"><span class="pulse" id="navPulse"></span><span id="navState">连接中</span></div>
+      <div class="row" style="margin-top:5px"><span id="navVer">v-</span> · <span id="navAux">-</span></div>
+    </div>
+  </nav>
+
+  <main class="main">
+    <header class="topbar">
+      <h2 id="ttl">概览</h2>
+      <span class="sep">/</span>
+      <span class="mono" id="subMeta"></span>
+      <span class="grow"></span>
+      <button class="icon ghost" id="btnTheme" title="切换主题">
+        <svg id="icoTheme" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"></svg>
+      </button>
+      <button class="ghost" id="btnRefresh">刷新</button>
+    </header>
+
+    <!-- 概览 -->
+    <section class="view" id="view-dashboard">
+      <div class="stats">
+        <div class="stat" id="stState"><div class="v" id="dvState">—</div><div class="k">服务状态</div></div>
+        <div class="stat"><div class="v" id="dvReq">—</div><div class="k">请求总数</div></div>
+        <div class="stat" id="stErr"><div class="v" id="dvErr">—</div><div class="k">失败请求</div></div>
+        <div class="stat"><div class="v" id="dvTok">—</div><div class="k">Token 估算（输入+输出）</div></div>
+        <div class="stat"><div class="v" id="dvLat">—</div><div class="k">平均延迟</div></div>
+        <div class="stat"><div class="v" id="dvInflight">—</div><div class="k">在途请求</div></div>
+      </div>
+      <div class="grid2">
+        <div class="box">
+          <header><h3>服务信息</h3><span class="grow"></span><span class="note" id="svcNote"></span></header>
+          <div class="pad"><table class="kv"><tbody id="svcBody"></tbody></table></div>
+        </div>
+        <div class="box">
+          <header><h3>凭证状态</h3><span class="grow"></span><a class="lnk" href="#credentials" data-goto="credentials">管理 →</a></header>
+          <div class="pad"><table class="kv"><tbody id="credSummary"></tbody></table></div>
+        </div>
+      </div>
+      <div class="box">
+        <header><h3>最近探测</h3><span class="grow"></span><a class="lnk" href="#models" data-goto="models">全部模型 →</a></header>
+        <div class="tbl-wrap">
+          <table class="acc md">
+            <thead><tr><th>模型</th><th>结果</th><th class="num">延迟</th><th class="num">探测时间</th></tr></thead>
+            <tbody id="dashProbes"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 凭证 -->
+    <section class="view" id="view-credentials" hidden>
+      <div class="box">
+        <header><h3>当前凭证</h3><span class="grow"></span>
+          <button class="xs" id="btnCredValidate">校验当前凭证</button>
+          <button class="xs ghost danger" id="btnCredClear">清除</button>
+        </header>
+        <div class="pad">
+          <table class="kv"><tbody id="credBody"></tbody></table>
+          <div class="state ok" id="credOk" hidden></div>
+          <div class="state err" id="credErr" hidden></div>
+        </div>
+      </div>
+      <div class="box">
+        <header><h3>更新凭证</h3><div class="hint">粘贴浏览器导出的 cookie（SID=…; HSID=…; SAPISID=… 形式）或 JSON 导出内容，保存后自动校验。</div></header>
+        <div class="pad">
+          <textarea id="credInput" rows="5" placeholder="SID=...; HSID=...; SSID=...; SAPISID=...; __Secure-1PSID=..."></textarea>
+          <div class="inline" style="margin-top:10px">
+            <button class="primary" id="btnCredSave">保存并校验</button>
+            <button class="ghost" id="btnCredSaveOnly">仅保存</button>
+            <span class="hint" id="credNote"></span>
+          </div>
+          <div class="state ok" id="credSaveOk" hidden></div>
+          <div class="state err" id="credSaveErr" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 模型与探测 -->
+    <section class="view" id="view-models" hidden>
+      <div class="box">
+        <header><h3>模型清单</h3><span class="note" id="mdNote"></span><span class="grow"></span>
+          <button class="xs" id="btnProbeAll">全部探测</button>
+          <button class="xs ghost" id="btnModelsReload">刷新</button>
+        </header>
+        <div class="tbl-wrap">
+          <table class="acc md">
+            <thead><tr><th>模型</th><th>状态</th><th>模式</th><th>思考档</th><th>描述</th><th class="num">探测</th><th class="c-acts"></th></tr></thead>
+            <tbody id="mdBody"></tbody>
+          </table>
+        </div>
+        <div class="pad"><div class="hint">探测会向上游发起一次真实的 ping 请求（逐个模型、顺序执行），请勿频繁点击。</div></div>
+      </div>
+    </section>
+
+    <!-- 用量 -->
+    <section class="view" id="view-usage" hidden>
+      <div class="box">
+        <header><h3>用量总览</h3><span class="note" id="usNote"></span><span class="grow"></span>
+          <span class="sel-note">窗口
+            <select id="usWindow">
+              <option value="24">近 24 小时</option>
+              <option value="72" selected>近 3 天</option>
+              <option value="168">近 7 天</option>
+              <option value="720">近 30 天</option>
+              <option value="0">全部历史</option>
+            </select>
+          </span>
+          <button class="xs ghost" id="btnUsage">刷新</button>
+        </header>
+        <div class="pad">
+          <div class="stats" id="usStats"></div>
+          <div class="uschart">
+            <div class="uschart-hd"><span>Token 分布（按小时聚合）</span><span class="legend"><i class="sw sw-p"></i>输入<i class="sw sw-c"></i>输出</span></div>
+            <div class="uschart-body" id="usChart"></div>
+          </div>
+        </div>
+      </div>
+      <div class="box">
+        <header><h3>按模型</h3><span class="note" id="usModelNote"></span></header>
+        <div class="tbl-wrap">
+          <table class="acc">
+            <thead><tr><th>模型</th><th class="num">请求</th><th class="num">失败</th><th class="num">输入 tokens</th><th class="num">输出 tokens</th><th class="num">合计</th><th class="num">平均延迟</th></tr></thead>
+            <tbody id="usModelBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 配置 -->
+    <section class="view" id="view-config" hidden>
+      <form id="cfgForm">
+        <div class="box">
+          <header><h3>服务</h3></header>
+          <div class="pad grid2">
+            <label class="fld"><span class="lb">监听端口</span><input name="port" type="number" min="1" max="65535"><span class="hint">改动需重启进程生效</span></label>
+            <label class="fld"><span class="lb">监听地址</span><input name="host" placeholder="0.0.0.0"><span class="hint">改动需重启进程生效</span></label>
+            <label class="fld"><span class="lb">默认模型</span><select name="default_model" id="cfgModel"></select><span class="hint">请求未指定模型或模型未知时回落到它</span></label>
+            <label class="fld"><span class="lb">API 密钥</span><textarea name="api_keys" rows="3" placeholder="每行一个；留空 = 不鉴权"></textarea><span class="hint">面板与模型接口共用同一组密钥；留空则完全开放，请谨慎</span></label>
+            <label class="switch"><input type="checkbox" name="log_requests"><span class="lb">记录请求日志（写入面板日志与 stderr）</span></label>
+            <label class="switch"><input type="checkbox" name="temporary_chats"><span class="lb">临时对话模式（不保存到 Gemini 历史）</span></label>
+          </div>
+        </div>
+        <div class="box">
+          <header><h3>上游与网络</h3></header>
+          <div class="pad grid3">
+            <label class="fld"><span class="lb">上游 bl 版本号</span><input name="gemini_bl"><span class="hint">Gemini Web 前端 build 号，上游变更时更新</span></label>
+            <label class="fld"><span class="lb">网络代理</span><input name="proxy" placeholder="http://127.0.0.1:7890"><span class="hint">留空 = 直连 / 系统环境变量</span></label>
+            <label class="fld"><span class="lb">auth_user</span><input name="auth_user" type="number" min="0" placeholder="留空 = 默认账号"><span class="hint">多 Google 账号时选择账号索引</span></label>
+            <label class="fld"><span class="lb">xsrf_token</span><input name="xsrf_token" placeholder="可选"><span class="hint">部分账号需要 at 参数</span></label>
+          </div>
+        </div>
+        <div class="box">
+          <header><h3>重试与超时</h3></header>
+          <div class="pad grid3">
+            <label class="fld"><span class="lb">重试次数</span><input name="retry_attempts" type="number" min="1" max="20"></label>
+            <label class="fld"><span class="lb">重试间隔（秒）</span><input name="retry_delay_sec" type="number" min="0" max="60" step="0.5"></label>
+            <label class="fld"><span class="lb">请求超时（秒）</span><input name="request_timeout_sec" type="number" min="1" max="3600"></label>
+          </div>
+        </div>
+        <div class="savebar">
+          <span class="note" id="cfgPath"></span>
+          <span class="grow"></span>
+          <span class="restart-note" id="cfgNote"></span>
+          <button type="button" id="btnCfgReload">放弃修改</button>
+          <button type="submit" class="primary" id="btnCfgSave">保存配置</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- 运行日志 -->
+    <section class="view" id="view-logs" hidden>
+      <div class="box">
+        <header><h3>运行日志</h3>
+          <span class="chips" id="logChips">
+            <button class="chip on" data-ch="all">全部</button>
+            <button class="chip" data-ch="chat">对话</button>
+            <button class="chip" data-ch="task">任务</button>
+            <button class="chip" data-ch="sys">系统</button>
+          </span>
+          <span class="note" id="logNote"></span>
+          <span class="grow"></span>
+          <button class="xs ghost" id="btnLogPin">自动滚动：开</button>
+        </header>
+        <pre id="logBox" class="logbox"></pre>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- 密钥门 -->
+<div class="veil" id="keyVeil">
+  <div class="dlg" style="width:420px">
+    <header>
+      <h3>需要访问密钥</h3>
+      <div class="hint">该网关已启用 api_key 鉴权，请输入 config.json 中的密钥。</div>
+    </header>
+    <div class="body">
+      <input type="password" id="keyInput" placeholder="api_key" autocomplete="current-password">
+      <div class="state err" id="keyErr" hidden style="margin-top:10px">密钥不正确，请重试。</div>
+    </div>
+    <footer>
+      <span class="grow"></span>
+      <button class="primary" id="btnKey">进入</button>
+    </footer>
+  </div>
+</div>
+
+<div id="toasts"></div>
+<script src="app.js"></script>
+</body>
+</html>

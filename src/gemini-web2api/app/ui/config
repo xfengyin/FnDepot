@@ -7,7 +7,7 @@
       "type": "url",
       "protocol": "http",
       "port": "8081",
-      "url": "/",
+      "url": "/panel",
       "allUsers": false,
       "control": {
         "accessPerm": "readonly",

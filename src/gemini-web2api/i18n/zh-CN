@@ -1,8 +1,8 @@
 [common]
-display_name="Gemini Web2API"
-desc="把 Google Gemini 网页端转换成 OpenAI 兼容 API 服务。零成本、免登录即可运行，支持 /v1/chat/completions、流式输出、函数调用与多模型切换。"
-changelog="1.1.0：首次发布。打包 Sophomoresty/gemini-web2api，改编为飞牛 fnOS 原生应用，可直接在应用中心安装、启停，并通过 FnDepot 应用源分发。"
+display_name="gemini-web2api"
+desc="把 Google Gemini 网页端转换成 OpenAI 兼容 API 服务，内置 Web 控制台：凭证管理、模型探测、用量统计、配置编辑与运行日志。支持 /v1/chat/completions、流式输出、函数调用与多模型切换；安装后通过 http://<NAS 地址>:8081/v1 调用，面板位于 /panel。"
+changelog="1.2.1：新增 Web 控制台（/panel）：凭证管理、模型探测、用量统计、配置编辑、运行日志；支持深浅色主题；应用显示名称统一为 gemini-web2api；保持 API 与配置向后兼容。"
 
 [entry]
-title="打开 Gemini Web2API 状态页。"
-desc="把 Google Gemini 网页端转换成 OpenAI 兼容 API 服务。零成本、免登录即可运行，支持 /v1/chat/completions、流式输出、函数调用与多模型切换。"
+title="打开 gemini-web2api 控制台。"
+desc="把 Google Gemini 网页端转换成 OpenAI 兼容 API 服务，内置 Web 控制台：凭证管理、模型探测、用量统计、配置编辑与运行日志。支持 /v1/chat/completions、流式输出、函数调用与多模型切换。"

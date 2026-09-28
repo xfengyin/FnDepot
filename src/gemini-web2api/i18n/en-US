@@ -1,8 +1,8 @@
 [common]
-display_name="Gemini Web2API"
-desc="Turn the Google Gemini web app into an OpenAI-compatible API service. Zero cost, works without login, and supports /v1/chat/completions, streaming, function calling and multiple models."
-changelog="1.1.0: first release. Packages Sophomoresty/gemini-web2api as a native fnOS app that can be installed and managed from App Center and distributed through a FnDepot source."
+display_name="gemini-web2api"
+desc="Turns the Google Gemini web app into an OpenAI-compatible API service with a built-in web console: credential management, model probes, usage stats, config editor and live logs. Supports /v1/chat/completions, streaming, function calling and multiple models. Call the API at http://<NAS-IP>:8081/v1; the console lives at /panel."
+changelog="1.2.1: adds the built-in web console (/panel) with credential management, model probes, usage statistics, config editor and live logs; light/dark themes; the app display name is unified as gemini-web2api; API and config remain backward compatible."
 
 [entry]
-title="Open the Gemini Web2API status page."
-desc="Turn the Google Gemini web app into an OpenAI-compatible API service. Zero cost, works without login, and supports /v1/chat/completions, streaming, function calling and multiple models."
+title="Open the gemini-web2api console."
+desc="Turns the Google Gemini web app into an OpenAI-compatible API service with a built-in web console: credential management, model probes, usage stats, config editor and live logs."
