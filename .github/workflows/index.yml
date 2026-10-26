@@ -1,0 +1,46 @@
+# 这条 CI 守的不是「代码有没有 bug」，是「发布了新 .fpk 但忘了更新索引」。
+# 本仓是 FnDepot 的**外部应用源**：客户端按 fnpack.json 里的 download_url / size / sha256
+# 去装包。这三者任何一个漂了，用户看到的是「安装失败」或「装了个旧版本」，
+# 而仓库里没有任何东西会提前报警 —— build.sh 会刷这段索引，但只在手工跑它时才刷。
+# 所以红了先去看 fnpack.json 与 packages/ 之间的对应，不是去读 Python 源码。
+name: index
+
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python 语法（内置源码）
+        run: python3 -m compileall -q src
+
+      - name: 应用源索引自洽（download_url / sha256 / size / 版本一致）
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, re, sys
+          idx = json.load(open('fnpack.json', encoding='utf-8'))
+          bad = []
+          for app, meta in idx['apps'].items():
+              for ver, rel in (meta.get('releases') or {}).items():
+                  for arch, pkg in (rel.get('packages') or {}).items():
+                      path = os.path.normpath(pkg['download_url'])
+                      if not os.path.exists(path):
+                          bad.append(f'{app} {ver} {arch}: 缺文件 {path}')
+                          continue
+                      blob = open(path, 'rb').read()
+                      if pkg['size'] != len(blob) or pkg['sha256'] != hashlib.sha256(blob).hexdigest():
+                          bad.append(f'{app} {ver} {arch}: sha256/size 与包不符')
+          manifest = {}
+          for line in open('src/gemini-web2api/manifest', encoding='utf-8'):
+              m = re.match(r'^([A-Za-z_]+)\s*=\s*(.+?)\s*$', line)
+              if m:
+                  manifest[m.group(1)] = m.group(2)
+          versions = [v for m in idx['apps'].values() for v in (m.get('releases') or {})]
+          newest = max(versions, key=lambda s: tuple(int(x) for x in s.split('.'))) if versions else None
+          if newest != manifest.get('version'):
+              bad.append(f'manifest version {manifest.get("version")} != 最新 release {newest}')
+          print('\n'.join(bad) or '索引自洽 OK')
+          sys.exit(1 if bad else 0)
+          PY
