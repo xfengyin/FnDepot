@@ -5,7 +5,10 @@
 # 所以红了先去看 fnpack.json 与 packages/ 之间的对应，不是去读 Python 源码。
 name: index
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]   # 只有 main 的 push 才跑：特性分支上不再与 pull_request 撞出同名 check-run
+  pull_request:
 
 jobs:
   check:
