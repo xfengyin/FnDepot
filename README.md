@@ -82,7 +82,7 @@ https://github.com/xfengyin/FnDepot
 大陆网络直连 `gemini.google.com` 是不通的（DNS 被污染 + TCP 超时）。在配置文件里加代理：
 
 ```json
-"proxy": "http://192.168.31.244:7890"
+"proxy": "http://<代理地址>:<端口>"
 ```
 
 怎么确认代理到底通不通：
