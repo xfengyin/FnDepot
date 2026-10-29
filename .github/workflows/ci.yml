@@ -1,0 +1,26 @@
+name: CI
+
+on: [push]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: install deps
+        # gemini_web2api 包三方依赖（AST 枚举）：Pillow + httpx；测试自述离线运行
+        run: python -m pip install --quiet pytest Pillow httpx
+      - name: pytest（PYTHONPATH 指向 FPK 应用内的包）
+        env:
+          PYTHONPATH: src/gemini-web2api/app/server
+        run: python -m pytest -q tests
