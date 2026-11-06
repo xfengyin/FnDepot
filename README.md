@@ -2,6 +2,10 @@
 
 把 [Sophomoresty/gemini-web2api](https://github.com/Sophomoresty/gemini-web2api) 封装成飞牛 fnOS 原生应用（`.fpk`），并在其基础上内置一套 **Web 控制台**；仓库同时提供符合 [FnDepot 外部应用源 V2 规范](https://github.com/EWEDLCM/FnDepot) 的应用源索引 `fnpack.json`。
 
+> **定位说明**：这是**自用**工具的打包仓库，不是通用发行版。维护者是唯一使用者，
+> 没有版本承诺、不看 issue 时效、也不保证适配别人的 NAS 环境。
+> 如果你只是想用 `gemini-web2api`，直接用上游仓库更省事；本仓的价值在于"把它变成 fnOS 原生 .fpk"这一层。
+
 | | |
 | --- | --- |
 | 应用包 | `packages/gemini-web2api_1.2.1_all.fpk`（x86 / arm 通用，纯 Python，无架构相关二进制） |
